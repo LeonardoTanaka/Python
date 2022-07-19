@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>Hospital Veterinário</title>
+    </h:head>
+    <h:body>
+        <h:panelGrid style="width: 100%; text-align: center;">
+            Gerenciar Tutores 
+        </h:panelGrid>
+        <p:commandLink  action="menu" value="Voltar ao menu" />
+        <p/>
+        <p:fieldset legend="Novo Tutor" toggleable="true"  collapsed="true" >
+            <h:form id="formNovo">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Nome: " />
+                    <p:inputText value="#{cadastroTutorControle.tutor.nome}"
+                                 required="true" requiredMessage="Nome obrigatório"/>
+                    <h:outputLabel value="CPF: " />
+                    <p:inputText value="#{cadastroTutorControle.tutor.cpf}"  />
+                    <h:outputLabel value="Endereço: " />
+                    <p:inputText value="#{cadastroTutorControle.tutor.endereco}"/>
+                    <h:outputLabel value="Telefone: " />
+                    <p:inputText value="#{cadastroTutorControle.tutor.telefone}"/>
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Cancelar" immediate="true"
+                                     action="menu"
+                                     />
+                    <p:commandButton value="Gravar" 
+                                     action="#{cadastroTutorControle.inserir()}"
+                                     update="formNovo, :formTabela" />
+                </h:panelGrid>
+                <p:messages showIcon="false" closable="true" />
+
+            </h:form>        
+        </p:fieldset>       
+        <p/>
+
+        <div id="divtab">
+            <h:form id="formTabela">  
+                <p:dataTable id="tabelaTutores"  
+                             value="#{cadastroTutorControle.listaTutores}" 
+                             var="item"
+                             lazy="true"
+                             emptyMessage="Nenhum tutor cadastrado"
+                             tableStyle="width:auto;  min-width: 100%" >
+                    <p:column sortBy="#{item.id}">
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+                    <p:column sortBy="#{item.nome}">
+                        <f:facet name="header">
+                            <h:outputText value="Nome"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nome}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Excluir"/>
+                        </f:facet>
+                        <p:commandLink type="button" styleClass="botaoLink" value="excluir" 
+                                       action="#{cadastroTutorControle.excluirTutor(item)}"
+                                       update="tabelaTutores">
+                            <p:confirm header="Excluir tutor" message="Você tem certeza que deseja excluir este tutor?" 
+                                       icon="ui-icon-alert"/>
+                        </p:commandLink>
+                    </p:column>  
+                </p:dataTable>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:outputPanel style="width: 100%; text-align:center" layout="block"> 
+                        <p:commandButton value="sim" type="button" styleClass="ui-confirmdialog-yes"  />
+                        <p:commandButton value="não" type="button" styleClass="ui-confirmdialog-no"  />
+                    </p:outputPanel>
+                </p:confirmDialog>
+            </h:form>
+        </div>
+
+
+    </h:body>
+</html>
