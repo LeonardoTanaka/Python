@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title> Hospital Veterinário </title>
+    </h:head>
+    <h:body>
+        <h:panelGrid style=" font-size: 28px; width: 100%; text-align: center;">
+            Novo Animal
+        </h:panelGrid>
+
+        <h:panelGrid columns="2" style="width: 100%; text-align: right;">
+            <p/>
+            <p:commandLink  action="menu" value="Voltar ao menu" immediate="true" />
+        </h:panelGrid>
+
+        <h:form id="formNovo">
+            <h:panelGrid columns="2" >
+                <h:outputLabel value="Espécie: " />
+                <p:inputText value="#{gerenciarAnimalControle.novoAnimal.especie}"
+                             required="true" requiredMessage="Espécie obrigatória" />
+                <h:outputLabel value="Raça: " />
+                <p:inputText value="#{gerenciarAnimalControle.novoAnimal.raca}"
+                             required="true" requiredMessage="Raça obrigatória" />
+                <h:outputLabel value="Nome: " />
+                <p:inputText value="#{gerenciarAnimalControle.novoAnimal.nome}"
+                             required="true" requiredMessage="Nome obrigatório" />
+                <h:outputLabel value="Idade: " />
+                <p:inputText value="#{gerenciarAnimalControle.novoAnimal.idade}" />
+
+                <h:outputLabel value="Tutor: " />
+
+                <p:selectOneMenu id="comboTutor" converter="tutorConverter" 
+                                 required="true" requiredMessage="Selecione um tutor"  
+                                 value="#{gerenciarAnimalControle.novoAnimal.tutor}" >
+                    <f:selectItem itemValue="#{null}" itemLabel="Escolha um tutor" 
+                                  noSelectionOption="false"/>
+                    <f:selectItems value="#{gerenciarAnimalControle.listaTutores}" 
+                                   var="tut"
+                                   itemValue="#{tut}"
+                                   itemLabel="#{tut.nome}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+
+            <h:panelGrid columns="2">
+                <p:commandButton value="Cancelar" immediate="true"
+                                 action="menu"  />
+                <p:commandButton value="Gravar" 
+                                 action="#{gerenciarAnimalControle.inserir()}"
+                                 update="formNovo" />
+                
+            </h:panelGrid>
+            <p:messages showIcon="false" closable="true" /> 
+        </h:form>
+
+    </h:body>
+</html>

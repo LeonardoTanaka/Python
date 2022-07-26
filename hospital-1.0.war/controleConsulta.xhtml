@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title> Hospital Veterinário </title>
+    </h:head>
+    <h:body>
+        <h:panelGrid style=" font-size: 28px; width: 100%; text-align: center;">
+            Nova Consulta
+        </h:panelGrid>
+
+        <h:panelGrid columns="2" style="width: 100%; text-align: right;">
+            <p/>
+            <p:commandLink action="menu" value="Voltar ao menu" immediate="true" />
+        </h:panelGrid>
+
+        <h:form id="formNovo">
+            <h:panelGrid columns="2" >
+                <h:outputLabel value="Detalhes: " />
+                <p:inputTextarea value="#{consultaControler.novaConsulta.detalhes}"
+                             required="true" requiredMessage="Detalhes obrigatórios" />
+                
+                
+                
+                <h:outputLabel value="Data"/>
+                <p:calendar pattern="dd/MM/yyyy" value="#{consultaControler.novaConsulta.date}" type="button">
+                    
+  
+                </p:calendar>
+                <h:outputLabel value="Animais: " />
+                <p:selectOneMenu id="comboAnimal" converter="animalConverter" 
+                                 required="true" requiredMessage="Selecione um animal"  
+                                 value="#{consultaControler.novaConsulta.animal}" >
+                    <f:selectItem itemValue="#{null}" itemLabel="Escolha um animal" 
+                                  noSelectionOption="false"/>
+                    <f:selectItems value="#{consultaControler.listaAnimal}" 
+                                   var="anim"
+                                   itemValue="#{anim}"
+                                   itemLabel="#{anim.nome}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+            
+           
+
+            <h:panelGrid columns="2">
+                <p:commandButton value="Cancelar" immediate="true"
+                                 action="menu"  />
+                <p:commandButton value="Gravar" 
+                                 action="#{consultaControler.inserir()}"
+                                 update="formNovo" />
+            </h:panelGrid>
+            <p:messages showIcon="false" closable="true" /> 
+        </h:form>
+
+    </h:body>
+</html>
